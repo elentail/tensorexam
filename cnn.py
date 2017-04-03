@@ -2,6 +2,7 @@
 import cv2
 import tensorflow as tf
 import random,glob,re,os
+import numpy as np
 tf.set_random_seed(777)  # reproducibility
 
 
@@ -143,6 +144,15 @@ if __name__ == '__main__':
         
         # Test model and check accuracy
 
-        tl = DataLoader('./train_set')
+        tl = DataLoader('./test_set')
         test_img,test_lbl = tl.nex_batch(40)
         print('Accuracy:', model.get_accuracy(test_img,test_lbl))
+
+        result_lbl = np.argmax(model.predict(test_img),axis=1)
+        result_path = './test_set/classified'
+        if(not os.path.exists(result_path)):
+            os.makedirs(result_path)
+
+        save_name = '{0}/{1}_{2}.jpg'
+        for idx,label in enumerate(result_lbl):
+            cv2.imwrite(save_name.format(result_path,label,idx),test_img[idx])

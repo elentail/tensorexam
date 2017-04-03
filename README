@@ -1,0 +1,6 @@
+# this project is tensorflow cnn sample
+# make_shape.py generate 4 types images
+# 0: pentagon
+# 1: star
+# 2: circle
+# 3: ellipse
